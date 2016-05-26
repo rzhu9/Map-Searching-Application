@@ -1,0 +1,68 @@
+Heuristic A* Search (Practical)
+
+0. For this portion of the assignment, you will be implementing an A* Heuristic Search on a map
+from http://OpenStreetMap.org. Your implementation will be exclusively written into the
+provided class skeleton FIRSTNAME_LASTNAME_AStar.java. After replacing the
+FIRSTNAME_LASTNAME portion of this filename with your own name, you will need to
+update the classname within this file, and the two references used to instantiate this class in
+Main.java: one to declare the reference variable and one to instantiate an instance of your class.
+Your final solution should run without any other changes being made to Main.java or Map.java.
+DO NOT include any package statements, and DO NOT call exit from any of the methods that
+you are implementing.
+
+This code utilizes Processing version 3.0. The core.jar file for this version of the library is
+available through the moodle page for this assignment. It should be added to your project and
+to your project's build path to run the provided code.
+
+Data
+For this assignment, you will be searching through map data from http://OpenStreetMap.org.
+You are provided with a sample map of Madison, WI, but are encouraged to experiment with
+other smaller maps for testing purposes. The provided Map class is able to read in the points
+and streets from one of these map files, and does some filtering of bicycle and walking paths in
+the process. The result is a network of Map.Point objects that each contain their own x and y
+position along with an ArrayList of neighboring points called neighbors. Your code will be able
+to crawl through this network of Map.Point objects by traversing through these lists of neighbor
+references.
+
+1. Within your AStar search class, there are two ArrayLists for you to keep track of the points that
+you have explored, and are considering exploring next according to their priority. The type of
+the objects in each of these lists is the SearchPoint class that is defined within your AStar class.
+This SearchPoint class is yours to implement and extend as you see fit. At a minimum you will
+need to keep track of the mapPoint that each SearchPoint represents reaching. Additionally you
+will need to implement the g(), h(), and f() methods to calculate the incurred cost to reach this
+point, the estimated remaining cost, and the resulting priority for exploring this point in the
+future. In addition to these methods, you will override the compareTo() and equals() methods
+of this class, so that you can more easily sort your frontier, and check whether your frontier or
+explored ArrayLists contain a SearchPoint that corresponds with a given Map.Point.
+
+2. The bulk of your A* Search algorithm will be implemented between two methods: the
+constructor of your Astar class will initialize all of your class member variables, and add the
+start point from the provided map to your frontier to begin the search. This constructor also
+receives the type of heuristic that should be used via the parameter H. For this parameter: 0 =
+zero heuristic which evaluates to zero for every state, 1 = manhattan distance heuristic which
+returns the sum of the x and y offesets between the point in question and the goal point, and 2 =
+the standard Euclidean L2 straight-line distance between the point in question and the goal
+point. Once this class has been instantiated, the Main class will repeatedly call it's
+exploreNextNode() method. Every time this method is called, it should explore the single
+highest priority SearchPoint from the frontier. This method may also need to do some work to
+help keep track of whether the search has completed, and if so what point the solution passes
+through. There are reported back to main by other methods, but some may find it helpful to
+update these kinds of state changes from this exploreNextNode() method.
+
+3. The other required methods in your AStar class are used to help you monitor and verify the
+correctness of your search as it proceeds and is completed. The getFrontier() and getExplored()
+methods return an ArrayList of the Map.Points corresponding to the SearchPoints in each of
+your ArrayLists. These are used by main to help you monitor how your search progresses.
+After you have found the solution or exhausted all possible chances of finding one,
+isComplete() should return true. After this happens, the getSolution() method should return an
+ArrayList of the Map.Points that your solution path passes through while traversing from the
+start point to the end point. These points must be returned in the correct order. While no
+solution has been found, the getSolution() method should instead return an empty ArrayList.
+
+4. Congratulations. Now that you have implemented each of the assigned methods, you are left
+only with the task of testing and validating the code that you have written. You are encouraged
+to try running your code on some smaller .osm map files to help validate the results of your
+search. The provided visualization and GUI code should help you in this endeavor. Not only
+can you compare the number of nodes explored before reaching a solution with each of the
+three heuristics, but you should also be able to find a way of causing the inadmissible heuristic
+to find sub-optimal solution.
